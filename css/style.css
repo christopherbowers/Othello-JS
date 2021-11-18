@@ -1,0 +1,35 @@
+* { box-sizing: border-box;}
+
+body {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  background-size: cover;
+  background-position: center bottom;
+  color: #ddd;
+}
+
+.board {
+  display: grid;
+  gap: 2px;
+  grid-template: repeat(8, 1fr) / repeat(8, 1fr);
+}
+
+.square {
+  width: 50px;
+  height: 50px;
+    background-color: rgb(0, 128, 0);
+}
+
+.square:hover { 
+  cursor: pointer;
+  background-color: rgb(0, 128, 0, 0.5);
+}
+
+.black { color: #000;}
+
+.white { color: #fff;}
