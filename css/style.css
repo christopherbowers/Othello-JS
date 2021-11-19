@@ -10,13 +10,16 @@ body {
   font-family: 'Orbitron', sans-serif;
   background-size: cover;
   background-position: center bottom;
-  color: #ddd;
 }
 
 .board {
   display: grid;
   gap: 2px;
   grid-template: repeat(8, 1fr) / repeat(8, 1fr);
+  border: 10px solid #000;
+  border-radius: 10px;
+  background-color: #000;
+  color: #fff;
 }
 
 .square {
@@ -26,16 +29,22 @@ body {
   width: 50px;
   height: 50px;
   background-color: rgb(0, 128, 0);
-  font-size: 5em;
+  font-size: 1em;
   text-shadow: #000 1px 1px 2px;
 }
 
 .square:hover { 
   cursor: pointer;
-  background-color: rgb(0, 128, 0, 0.5);
+/*   background-color: rgb(0, 128, 0, 0.5); */
 }
+
 
 .disabled:hover { background-color: rgb(0, 128, 0); }
 
-.black { color: #000;}
-.white { color: #fff;}
+.valid:hover { 
+  cursor: pointer;
+  background-color: rgb(0, 128, 0, 0.5);
+}
+
+.black { color: #000; font-size: 5em;}
+.white { color: #fff; font-size: 5em;}
