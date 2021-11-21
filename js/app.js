@@ -6,7 +6,7 @@ let board = [
   ['', '', '',      '',      '', '', '', ''],
   ['', '', '',      '',      '', '', '', ''],
   ['', '', '', 'white', 'black', '', '', ''],
-  ['', '', '', 'black', 'white', 'white', 'white', ''],
+  ['', '', '', 'black', 'white', '', '', ''],
   ['', '', '',      '',      '', '', '', ''],
   ['', '', '',      '',      '', '', '', ''],
   ['', '', '',      '',      '', '', '', '']
@@ -38,7 +38,7 @@ const changeTurns = () => {
 const createBoard = () => {
   for (let row = 0; row < board.length; row++) {
     for (let col = 0; col < board[row].length; col++) {
-      document.querySelector('.board').innerHTML += `<div id="${[row]}${[col]}" class="square"></div>`;
+      document.querySelector('.board').innerHTML += `<div id="${[row]}${[col]}" class="square">${[row]}${[col]}</div>`;
     }
   }
 }
@@ -77,7 +77,7 @@ for (let row = 0; row < board.length; row++) {
   for (let col = 0; col < board[row].length; col++) {
     
       document.getElementById(`${[row]}${[col]}`).addEventListener('click', () => {
-//       console.log(row,col)
+      console.log(row,col)
       if (board[row][col] === '') {
       
         // empty and opponent to right and there same at some point in row
@@ -90,7 +90,6 @@ for (let row = 0; row < board.length; row++) {
                   validTiles++
                   console.log(validTiles)
                 }
-              }   
                 if (validTiles !== 0 && board[row][col+1+validTiles] === player) {
                   console.log(validTiles)
                 board[row][col] = player;
@@ -99,29 +98,36 @@ for (let row = 0; row < board.length; row++) {
                 }
                 changeTurns();
                 placePieces();
+                console.log(player)
                 return;
-                }              
+              }   
+            }              
         
           // Check left
-          for (let i = col-1; i > 0; i--) {
+          
+          for (let i = col-1; i > 0; i--) { // Check for opponent tile directly to the left
               let currentTile = board[row][i]
-                if (currentTile !== '' && currentTile !== player && i-1 > 0) {
+                if (currentTile !== '' && currentTile !== player && i-1 > 0 ) { // dont look past the wall
                   validTiles++
                   console.log(validTiles)
                 }
-              }
+              console.log(col-1-validTiles)
+               
                 if (validTiles !== 0 && board[row][col-1-validTiles] === player) {
                   console.log(validTiles)
                 board[row][col] = player;
                 for (let i = col-1; i > col-1-validTiles; i--) {
                   board[row][i] = player
                 }
-                changeTurns();
                 placePieces();
+                changeTurns();
+                console.log(player)
                 return;
-                }               
-        
-       }//  
+                }
+              }
+                         
+
+       }// 
       
       }) // close event listener
   } // close col for loop
