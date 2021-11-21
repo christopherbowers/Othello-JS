@@ -5,8 +5,8 @@ let board = [
   ['', '', '',      '',      '', '', '', ''],
   ['', '', '',      '',      '', '', '', ''],
   ['', '', '',      '',      '', '', '', ''],
-  ['', 'white', 'white', 'white', 'black', '', '', 'white'],
-  ['', '', '', 'black', 'white', '', '', ''],
+  ['', '', '', 'white', 'black', '', '', ''],
+  ['', '', '', 'black', 'white', 'white', 'white', ''],
   ['', '', '',      '',      '', '', '', ''],
   ['', '', '',      '',      '', '', '', ''],
   ['', '', '',      '',      '', '', '', '']
@@ -38,7 +38,7 @@ const changeTurns = () => {
 const createBoard = () => {
   for (let row = 0; row < board.length; row++) {
     for (let col = 0; col < board[row].length; col++) {
-      document.querySelector('.board').innerHTML += `<div id="${[row]}${[col]}" class="square"><div class=""></div></div>`;
+      document.querySelector('.board').innerHTML += `<div id="${[row]}${[col]}" class="square"></div>`;
     }
   }
 }
@@ -83,31 +83,49 @@ for (let row = 0; row < board.length; row++) {
         // empty and opponent to right and there same at some point in row
         
           let validTiles = 0
+          // Check to the right
             for (let i = col+1; i < board[row].length; i++) {
               let currentTile = board[row][i]
                 if (currentTile !== '' && currentTile !== player && i+1 < 7) {
                   validTiles++
-                console.log(validTiles)
+                  console.log(validTiles)
                 }
-            }
-          if (validTiles !== 0 && board[row][col+1+validTiles] === player) {
-            console.log(validTiles)
-          board[row][col] = player;
-          for (let i = col+1; i < col+1+validTiles; i++) {
-            board[row][i] = player
-          }
-          
-          changeTurns();
-          placePieces();
-          
-          
-        }
+              }   
+                if (validTiles !== 0 && board[row][col+1+validTiles] === player) {
+                  console.log(validTiles)
+                board[row][col] = player;
+                for (let i = col+1; i < col+1+validTiles; i++) {
+                  board[row][i] = player;
+                }
+                changeTurns();
+                placePieces();
+                return;
+                }              
         
-       }
+          // Check left
+          for (let i = col-1; i > 0; i--) {
+              let currentTile = board[row][i]
+                if (currentTile !== '' && currentTile !== player && i-1 > 0) {
+                  validTiles++
+                  console.log(validTiles)
+                }
+              }
+                if (validTiles !== 0 && board[row][col-1-validTiles] === player) {
+                  console.log(validTiles)
+                board[row][col] = player;
+                for (let i = col-1; i > col-1-validTiles; i--) {
+                  board[row][i] = player
+                }
+                changeTurns();
+                placePieces();
+                return;
+                }               
+        
+       }//  
       
-      })
-  }
-}
+      }) // close event listener
+  } // close col for loop
+} // Close row for loop
 
 
 
