@@ -5,7 +5,7 @@ let board = [
   ['', '', '',      '',      '', '', '', ''],
   ['', '', '',      '',      '', '', '', ''],
   ['', '', '',      '',      '', '', '', ''],
-  ['', '', '', 'white', 'black', '', '', ''],
+  ['', 'white', 'white', 'white', 'black', '', '', 'white'],
   ['', '', '', 'black', 'white', '', '', ''],
   ['', '', '',      '',      '', '', '', ''],
   ['', '', '',      '',      '', '', '', ''],
@@ -19,8 +19,8 @@ let board = [
 
 let player = 'black'
 
-        /* Switch between black's and white's turns
-        ----------------------------------------- */
+/* Switch between black's and white's turns
+----------------------------------------- */
 const changeTurns = () => {
   if (player === 'black') {
     player = 'white';
@@ -29,7 +29,7 @@ const changeTurns = () => {
   }
 }
 
-let gameOver = false;
+// let gameOver = false;
 
 
 // Render game board in HTML
@@ -42,10 +42,9 @@ const createBoard = () => {
     }
   }
 }
-
-
-
 createBoard();
+
+
 
 // Place Pieces
 // ----------------------------------------
@@ -71,18 +70,43 @@ const placePieces = () => {
 
 placePieces();
 
-
 // Add event listener to squares
 // ----------------------------------------
 
 for (let row = 0; row < board.length; row++) {
   for (let col = 0; col < board[row].length; col++) {
-    document.getElementById(`${[row]}${[col]}`).addEventListener('click', () => {
-    board[row][col] = player;
-    changeTurns();
-    placePieces();
+    
+      document.getElementById(`${[row]}${[col]}`).addEventListener('click', () => {
+//       console.log(row,col)
+      if (board[row][col] === '') {
+      
+        // empty and opponent to right and there same at some point in row
+        
+          let validTiles = 0
+            for (let i = col+1; i < board[row].length; i++) {
+              let currentTile = board[row][i]
+                if (currentTile !== '' && currentTile !== player && i+1 < 7) {
+                  validTiles++
+                console.log(validTiles)
+                }
+            }
+          if (validTiles !== 0 && board[row][col+1+validTiles] === player) {
+            console.log(validTiles)
+          board[row][col] = player;
+          for (let i = col+1; i < col+1+validTiles; i++) {
+            board[row][i] = player
+          }
+          
+          changeTurns();
+          placePieces();
+          
+          
+        }
+        
+       }
+      
+      })
   }
-)}
 }
 
 
