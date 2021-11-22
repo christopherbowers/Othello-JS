@@ -129,19 +129,16 @@ for (let row = 0; row < board.length; row++) {
           // Check to the above
           
           for (let i = row-1; i > 0; i--) { // Check for opponent tile directly above
-              let currentTile = board[col][i]
+              let currentTile = board[i][col]
                 if (currentTile !== '' && currentTile !== player && i-1 > 0) { // dont look past the wall
                   validTiles++
                   console.log('Valid Tiles ' + validTiles)
                 }
                
-//                 console.log(row-1-validTiles)
-
                 if (validTiles !== 0 && board[row-1-validTiles][col] === player) {
-//                   console.log(validTiles)
                 board[row][col] = player;
                 for (let i = row-1; i > row-1-validTiles; i--) {
-                  board[col][i] = player
+                  board[i][col] = player
                 }
                 placePieces();
                 changeTurns();
@@ -149,20 +146,13 @@ for (let row = 0; row < board.length; row++) {
                 return;
                 }
             }
-              
-
-            
-            
-          
-
-            
-              
 
        }// 
       
       }) // close event listener
   } // close col for loop
 } // Close row for loop
+
 
 
 
