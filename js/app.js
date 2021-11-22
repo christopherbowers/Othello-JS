@@ -4,7 +4,7 @@
 let board = [
   ['', '', '',      '',      '', '', '', ''],
   ['', '', '',      '',      '', '', '', ''],
-  ['', '', '',      '',      '', '', '', ''],
+  ['', '', '',      'white',      '', '', '', ''],
   ['', '', '', 'white', 'black', '', '', ''],
   ['', '', '', 'black', 'white', '', '', ''],
   ['', '', '',      '',      'white', '', '', ''],
@@ -146,7 +146,24 @@ for (let row = 0; row < board.length; row++) {
                 return;
                 }
             }
-
+            
+          // Check below
+            for (let i = row+1; i < board[col].length; i++) {
+              let currentTile = board[i][col]
+                if (currentTile !== '' && currentTile !== player && i+1 < 7) {
+                  validTiles++
+                }
+                if (validTiles !== 0 && board[row+1+validTiles][col] === player) {
+                board[row][col] = player;
+                for (let i = row+1; i < row+1+validTiles; i++) {
+                  board[i][col] = player;
+                }
+                changeTurns();
+                placePieces();
+                whosTurn();
+                return;
+              }   
+            } 
        }// 
       
       }) // close event listener
