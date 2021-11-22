@@ -1,3 +1,6 @@
+:root {
+  --square-size: 50px
+}
 * { box-sizing: border-box;}
 
 body {
@@ -24,11 +27,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50px;
-  height: 50px;
+  width: var(--square-size);
+  height: var(--square-size);
   background-color: rgb(0, 128, 0);
-  font-size: 1em;
-  text-shadow: #000 1px 1px 2px;
 }
 
 .square:hover { 
@@ -44,7 +45,23 @@ body {
   background-color: rgb(0, 128, 0, 0.5);
 }
 
-.black { color: #000; font-size: 5em;}
-.white { color: #fff; font-size: 5em;}
+.black, .white {
+  border-radius: 50%;
+  height: calc(var(--square-size) - 10px);
+  width: calc(var(--square-size) - 10px);
+  box-shadow: #000 1px 1px 3px;
+}
+
+.black {
+  background-color: #000;
+  background: radial-gradient(#333, #000)
+}
+
+.white {
+  background-color: #fff;
+    background: radial-gradient(#fff, #aaa)
+}
 
 .whos-turn {text-transform: capitalize;}
+
+body#landing-page { background: #fff;}

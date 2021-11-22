@@ -7,15 +7,37 @@
 	<title>Othello JS</title>
 	
 </head>
-<body>
+<body id="landing-page">
 
   <header>
     <h1>Othello</h1>
   </header>
   
-  <section class=""><a href="play.html">Play</a></section>
+  <section>
+    <h2 id="howtowin">How to Win</h2>
+
+    <p>The object of the game is to have the majority of your colour discs on the board at the end of the game.</p>
+
+    <h2 id="howtoplay">How to Play</h2>
+
+    <p>Black plays first. Click on a valid spot on the grid. You must place a disc on a spot that allows you to “flank” or “capture” at least one of your opponent’s discs by bordering them in a row.</p>
+
+    <p>All captured discs will flip to your color.</p>
+
+    <p>To capture your opponent’s discs you must have 1 of your own pieces at the end of a row and then on your turn place a new piece at the beginning of the row. Everything in between on that row is now flipped to your color. You can only capture rows of a single color adjacent to each other; there cannot be any open space or your own discs between them or the combo is interrupted.</p>
+
+    <p>You can flank any number of discs. You may capture discs vertically, horizontally, or diagonally. You may capture in multiple directions at the same time.</p>
+
+    <p>If you cannot make a valid move then your turn is forfeited and your opponent may go again. If you have a valid move available to you then you must make that move and are not allowed to forfeit your turn.</p>
+
+    <p>When neither player can make any further play then the game is over.</p>
+</section>
+
+  <section class="">
+    <button class="play-button" onclick="window.location.href='play.html';"><span>Play</span></a>
+    </button>
+  </section>
 	
 	<fotter></fotter>
-	<script src="js/app.js"></script>
 </body>
 </html>
