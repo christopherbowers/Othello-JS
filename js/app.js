@@ -7,7 +7,7 @@ let board = [
   ['', '', '',      '',      '', '', '', ''],
   ['', '', '', 'white', 'black', '', '', ''],
   ['', '', '', 'black', 'white', '', '', ''],
-  ['', '', '',      '',      '', '', '', ''],
+  ['', '', '',      '',      'white', '', '', ''],
   ['', '', '',      '',      '', '', '', ''],
   ['', '', '',      '',      '', '', '', '']
 ];
@@ -18,6 +18,13 @@ let board = [
  
 
 let player = 'black'
+
+const whosTurn = () => {
+  document.querySelector('.whos-turn').innerHTML = player + "’s Turn"
+}
+whosTurn();
+
+
 
 /* Switch between black's and white's turns
 ----------------------------------------- */
@@ -38,7 +45,7 @@ const changeTurns = () => {
 const createBoard = () => {
   for (let row = 0; row < board.length; row++) {
     for (let col = 0; col < board[row].length; col++) {
-      document.querySelector('.board').innerHTML += `<div id="${[row]}${[col]}" class="square">${[row]}${[col]}</div>`;
+      document.querySelector('.board').innerHTML += `<div id="${[row]}${[col]}" class="square"></div>`;
     }
   }
 }
@@ -57,11 +64,11 @@ const placePieces = () => {
       } else {
         if (position === 'black') {
           document.getElementById(`${[row]}${[col]}`).innerHTML = '<div class="black">●</div>';
-          document.getElementById(`${[row]}${[col]}`).classList.add('disabled');
         }
         if (position === 'white') {
           document.getElementById(`${[row]}${[col]}`).innerHTML = '<div class="white">●</div>';
-          document.getElementById(`${[row]}${[col]}`).classList.add('disabled');
+
+          
         }
       }
     }
@@ -70,62 +77,86 @@ const placePieces = () => {
 
 placePieces();
 
-// Add event listener to squares
-// ----------------------------------------
 
 for (let row = 0; row < board.length; row++) {
   for (let col = 0; col < board[row].length; col++) {
     
-      document.getElementById(`${[row]}${[col]}`).addEventListener('click', () => {
-      console.log(row,col)
+      document.getElementById(`${[row]}${[col]}`).addEventListener('click', () => { // Add event listener to squares
+//       console.log(row,col)
       if (board[row][col] === '') {
-      
-        // empty and opponent to right and there same at some point in row
-        
+         
           let validTiles = 0
+          
           // Check to the right
             for (let i = col+1; i < board[row].length; i++) {
               let currentTile = board[row][i]
                 if (currentTile !== '' && currentTile !== player && i+1 < 7) {
                   validTiles++
-                  console.log(validTiles)
                 }
                 if (validTiles !== 0 && board[row][col+1+validTiles] === player) {
-                  console.log(validTiles)
                 board[row][col] = player;
                 for (let i = col+1; i < col+1+validTiles; i++) {
                   board[row][i] = player;
                 }
                 changeTurns();
                 placePieces();
-                console.log(player)
+                whosTurn();
                 return;
               }   
             }              
         
-          // Check left
-          
+          // Check to the left
           for (let i = col-1; i > 0; i--) { // Check for opponent tile directly to the left
               let currentTile = board[row][i]
                 if (currentTile !== '' && currentTile !== player && i-1 > 0 ) { // dont look past the wall
                   validTiles++
-                  console.log(validTiles)
+                  console.log('Valid Tiles ' + validTiles)
                 }
-              console.log(col-1-validTiles)
                
                 if (validTiles !== 0 && board[row][col-1-validTiles] === player) {
-                  console.log(validTiles)
                 board[row][col] = player;
                 for (let i = col-1; i > col-1-validTiles; i--) {
                   board[row][i] = player
                 }
                 placePieces();
                 changeTurns();
-                console.log(player)
+                whosTurn();
                 return;
                 }
               }
-                         
+              
+              
+          // Check to the above
+          
+          for (let i = row-1; i > 0; i--) { // Check for opponent tile directly above
+              let currentTile = board[col][i]
+                if (currentTile !== '' && currentTile !== player && i-1 > 0) { // dont look past the wall
+                  validTiles++
+                  console.log('Valid Tiles ' + validTiles)
+                }
+               
+//                 console.log(row-1-validTiles)
+
+                if (validTiles !== 0 && board[row-1-validTiles][col] === player) {
+//                   console.log(validTiles)
+                board[row][col] = player;
+                for (let i = row-1; i > row-1-validTiles; i--) {
+                  board[col][i] = player
+                }
+                placePieces();
+                changeTurns();
+                console.log(player)
+                return;
+                }
+            }
+              
+
+            
+            
+          
+
+            
+              
 
        }// 
       
