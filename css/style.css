@@ -22,7 +22,7 @@ body#play {
 #play h2 {
   text-align: center;
 }
-p {
+article {
   font-family: "Libre Baskerville";
   text-align: left;
 }
@@ -127,3 +127,13 @@ footer {
   background-color: rgb(0, 128, 0,.5);
 }
 
+
+footer a {
+  color: #ddd;
+  text-decoration: none;
+  transition: all .25s;
+}  
+footer a:hover {
+  color: #fff;
+  border-bottom: 3px solid #fff;
+}  
