@@ -4,7 +4,7 @@ let board = [
   ['', '', '',      '',      '', '', '', ''],
   ['', '', '', 'white', 'black', '', '', ''],
   ['', '', '', 'black', 'white', '', '', ''],
-  ['', '', '',      '',      '', '', '', ''],
+  ['', '', '',      '',      '', 'black', '', ''],
   ['', '', '',      '',      '', '', '', ''],
   ['', '', '',      '',      '', '', '', '']
 ];
@@ -129,7 +129,6 @@ const checkRight = (row,col) => {
       for (let i = col+1; i < col+1+validTiles; i++) {
           board[row][i] = player;
         }
-        console.log(validTiles)
         placePieces();
         return;
         } 
@@ -172,13 +171,38 @@ const checkBelow = (row,col) => {
   } 
 }
 
+
+
+const checkDownRight = (row, col) => {
+    let validTiles = 0
+    for (let i = row + 1; i < 8; i++) {
+        for (let j = col + 1; j < 8; j++) {
+            let currentTile = board[i][j]
+            if (currentTile !== '' && currentTile !== player && i + 1 < 7 && j + 1 < 7) {
+                validTiles++
+            }
+            if (validTiles !== 0 && board[row + 1 + validTiles][col + 1 + validTiles] === player) {
+                console.log('Valid Tiles ' + validTiles)
+                board[row][col] = player;
+                for (let i = row + 1; i < row + 1 + validTiles; i++) {
+                    for (let j = col + 1; j < col + 1 + validTiles; j++) {
+                        board[i][j] = player;
+                    }
+                }
+                placePieces();
+                return;
+            }
+        }
+    }
+}
+
+
 const initGame = () => {
   createBoard();
   placePieces();
   whosTurn();
   drawScoreBoard()
 }
-initGame();
 
 let gameOver = false
 let isBoardFull = () => {
@@ -192,6 +216,10 @@ let isBoardFull = () => {
 }
 isBoardFull()
 
+
+
+
+initGame();
 //////// Game Play Loop ////////////
 
 for (let row = 0; row < board.length; row++) {
@@ -202,13 +230,14 @@ for (let row = 0; row < board.length; row++) {
       checkAbove(row,col)
       checkRight(row,col)
       checkBelow(row,col)
+      
+      checkDownRight(row,col)
      
       if (placedPiece) {
         changeTurns()
       }
       
       updateScore()
-      console.log(blackScore + whiteScore)      
       whosTurn()
       isBoardFull()
       }) // close event listener
