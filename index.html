@@ -4,21 +4,24 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Libre+Franklin:wght@800|Libre+Baskerville">
 	<title>Othello JS</title>
 	
 </head>
-<body id="landing-page">
-
+<body>
+<div class="container">
   <header>
     <h1>Othello</h1>
   </header>
-  
-  <section>
-    <h2 id="howtowin">How to Win</h2>
-
+    <section class="">
+    <button class="button" onclick="window.location.href='play.html';"><span>Play</span></a>
+    </button>
+  </section>
+  <article>
+    <h2>How to Win</h2>
     <p>The object of the game is to have the majority of your colour discs on the board at the end of the game.</p>
 
-    <h2 id="howtoplay">How to Play</h2>
+    <h2>How to Play</h2>
 
     <p>Black plays first. Click on a valid spot on the grid. You must place a disc on a spot that allows you to “flank” or “capture” at least one of your opponent’s discs by bordering them in a row.</p>
 
@@ -31,13 +34,13 @@
     <p>If you cannot make a valid move then your turn is forfeited and your opponent may go again. If you have a valid move available to you then you must make that move and are not allowed to forfeit your turn.</p>
 
     <p>When neither player can make any further play then the game is over.</p>
-</section>
+  </article>
 
   <section class="">
-    <button class="play-button" onclick="window.location.href='play.html';"><span>Play</span></a>
+    <button class="button" onclick="window.location.href='play.html';"><span>Play</span></a>
     </button>
   </section>
 	
-	<fotter></fotter>
+	<fotter></fotter></div>
 </body>
 </html>
