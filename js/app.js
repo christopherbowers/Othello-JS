@@ -12,16 +12,17 @@ let board = [
 let player = 'black'
 let blackScore = 2
 let whiteScore = 2
-let blackScoreContainer = document.createElement('span')
-let whiteScoreContainer = document.createElement('span')
 let placedPiece = false
 let cantPlacePiece = 0
+
+let blackScoreContainer = document.createElement('span')
+let whiteScoreContainer = document.createElement('span')
 
 const drawScoreBoard = () => {
   document.querySelector('.score-board').appendChild(blackScoreContainer)
   document.querySelector('.score-board').appendChild(whiteScoreContainer)
-  blackScoreContainer.innerHTML = 'Blacks: 2'
-  whiteScoreContainer.innerHTML = 'White: 2'
+  blackScoreContainer.innerHTML = 'Blacks: ' + blackScore
+  whiteScoreContainer.innerHTML = 'White: ' + whiteScore
 }
 drawScoreBoard()
 
@@ -42,9 +43,10 @@ const updateScore = () => {
   }
   blackScore = blacks
   whiteScore = whites
-  blackScoreContainer.innerHTML = 'Blacks: ' + blackScore
-  whiteScoreContainer.innerHTML = 'White: ' + whiteScore
+  blackScoreContainer.innerHTML = 'Blacks: ' + blacks
+  whiteScoreContainer.innerHTML = 'White: ' + whites
 }
+
 
 const whosTurn = () => {
   document.querySelector('.whos-turn').innerHTML = player + "’s Turn"
@@ -173,29 +175,6 @@ const checkBelow = (row,col) => {
     }   
   } 
 }
-
-// const checkDownRight = (row, col) => {
-//     let validTiles = 0
-//     for (let i = row + 1; i < 8; i++) {
-//         for (let j = col + 1; j < 8; j++) {
-//             let currentTile = board[i][j]
-//             if (currentTile !== '' && currentTile !== player && i + 1 < 7 && j + 1 < 7) {
-//                 validTiles++
-//                 console.log('Valid Tiles ' + validTiles)
-//             }
-//             if (validTiles !== 0 && board[row + 1 + validTiles][col + 1 + validTiles] === player) {
-//                 board[row][col] = player;
-//                 for (let i = row + 1; i < row + 1 + validTiles; i++) {
-//                     for (let j = col + 1; j < col + 1 + validTiles; j++) {
-//                         board[i][j] = player;
-//                     }
-//                 }
-//                 placePieces();
-//                 return;
-//             }
-//         }
-//     }
-// }
 
 let gameOver = false
 let isGameOver = () => {
