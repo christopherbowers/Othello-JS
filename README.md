@@ -3,7 +3,7 @@ Othello made with JavaScript
 
 By: Christopher Bowers
 
-![](https://1.bp.blogspot.com/-4eo1x2Ay7ZE/V9Xz04kT5hI/AAAAAAAACAc/aEjrwrnM33UOv8YTZK_RX6JLNVw322kDgCLcB/s1600/Screen%2BShot%2B2016-09-11%2Bat%2B5.15.45%2BPM.png)
+![](resources/othello-screenshot.png)
 
 [Trello Board](https://trello.com/b/DHE5hvNf)
 
