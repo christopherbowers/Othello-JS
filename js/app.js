@@ -12,27 +12,56 @@ let board = [
   ['', '', '',      '',      '', '', '', '']
 ];
 
-let blackScore = 0
-
-let getBlackScore = () => {
-for (let i = 0; i < board.length; i++) {
-
-let scoreCount = board[i].reduce(function(acc,value) {
-  if (value == 'black') {
-    acc++
-    blackScore++
-    return acc
-  }
-},0) 
-}
-console.log(blackScore)
-}
-
-// let blackScore
-// let whiteScore
+let player = 'black'
+let blackScore = 2
+let whiteScore = 2
 let placedPiece = false
 
-let player = 'black'
+const updateScore = () => {
+  let blacks = 0
+  let whites = 0
+  for (let row = 0; row < 8; row++) {
+    for (let col = 0; col < 8; col++) {
+      let value = board[row][col];
+      if (value === 'black') {
+        blacks += 1
+      }
+      else if (value === 'white') {
+        whites += 1
+      }
+       
+    }
+  }
+  blackScore = blacks
+  whiteScore = whites
+}
+
+// let getBlackScore = () => {
+//   for (let i = 0; i < board.length; i++) {
+//     let scoreCount = 0
+//     scoreCount = board[i].reduce(function(acc,value) {
+//       if (value == 'black') {
+//         acc++
+//         blackScore++
+//         return acc
+//       }
+//     },0) 
+//   }
+//   console.log('Black score ' + blackScore)
+// }
+// 
+// let getWhiteScore = () => {
+//   for (let i = 0; i < board.length; i++) {
+//     let scoreCount = board[i].reduce(function(acc,value) {
+//       if (value == 'white') {
+//         acc++
+//         whiteScore++
+//         return acc
+//       }
+//     },0) 
+//   }
+//   console.log('White score ' + whiteScore)
+// }
 
 const whosTurn = () => {
   document.querySelector('.whos-turn').innerHTML = player + "’s Turn"
@@ -53,8 +82,8 @@ const changeTurns = () => {
 ///////////// Render HTML for game board ///////////////
 
 const createBoard = () => {
-  for (let row = 0; row < board.length; row++) {
-    for (let col = 0; col < board[row].length; col++) {
+  for (let row = 0; row < 8; row++) {
+    for (let col = 0; col < 8; col++) {
       document.querySelector('.board').innerHTML += `<div id="${[row]}${[col]}" class="square"></div>`;
     }
   }
@@ -65,8 +94,8 @@ createBoard();
 
 ///////////// Place Pieces on Board /////////
 const placePieces = () => {
-  for (let row = 0; row < board.length; row++) {
-    for (let col = 0; col < board[row].length; col++) {
+  for (let row = 0; row < 8; row++) {
+    for (let col = 0; col < 8; col++) {
       let position = board[row][col]
       if (position === '') {
       } else {
@@ -93,7 +122,6 @@ const checkLeft = (row,col) => {
       if (currentTile !== '' && currentTile !== player && i-1 >= 0 ) {
         validTiles++
       }
-   
       if (validTiles !== 0 && board[row][col-1-validTiles] === player) {
       board[row][col] = player;
       for (let i = col-1; i > col-1-validTiles; i--) {
@@ -111,7 +139,6 @@ const checkRight = (row,col) => {
       let currentTile = board[row][i]
         if (currentTile !== '' && currentTile !== player && i+1 < 7) {
           validTiles++
-//           console.log(validTiles)
       }
       if (validTiles !== 0 && board[row][col+1+validTiles] === player) {
         board[row][col] = player;
@@ -148,9 +175,7 @@ const checkBelow = (row,col) => {
     let currentTile = board[i][col]
       if (currentTile !== '' && currentTile !== player && i+1 < 7) {
         validTiles++
-        
       }
-  
       if (validTiles !== 0 && board[row+1+validTiles][col] === player) {
       board[row][col] = player;
       for (let i = row+1; i < row+1+validTiles; i++) {
@@ -175,30 +200,27 @@ for (let row = 0; row < board.length; row++) {
       if (placedPiece) {
         changeTurns()
       }
-      getBlackScore()
       
+      redrawScore()
+      console.log('Black score ' + blackScore)      
+      console.log('White score ' + whiteScore)      
+//       getBlackScore()
+//       getWhiteScore()
       whosTurn()
       
       }) // close event listener
   } // close col for loop
 } // Close row for loop
 
-// 
-// for (let row = 0; row < board.length; row++) {
-//   for (let col = 0; col < board[row].length; col++) {
-//   
-//     const countBlack = board[row].filter((word) => { return word === 'black' })
-// //     const countBlack = board.filter((word) => { return word === 'black' })
-//     console.log(countBlack)
-//     
-//   }
-// }
-
-
-
-
-
-//   let white = (board[i].reduce(word =>    word === 'white')) 
-// //     blackScore++
-//     console.log(white)
-//   }
+let isBoardFull = () => {
+  for (let i = 0; i < board.length; i++) {
+    let scoreCount = board[i].reduce(function(acc,value) {
+      if (value == 'white') {
+        acc++
+        whiteScore++
+        return acc
+      }
+    },0) 
+  }
+  console.log('White score ' + whiteScore)
+}
