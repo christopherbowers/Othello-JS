@@ -1,6 +1,3 @@
-// Game board array
-// --------------------
-
 let board = [
   ['', '', '',      '',      '', '', '', ''],
   ['', '', '',      '',      '', '', '', ''],
@@ -12,13 +9,23 @@ let board = [
   ['', '', '',      '',      '', '', '', '']
 ];
 
+// let board = [
+//   ['black', 'black', 'black', 'white', 'black', 'black', 'black', 'black'],
+//   ['black', 'black', 'black', 'white', 'black', 'black', 'black', 'black'],
+//   ['black', 'black', 'black', 'white', 'black', 'black', 'black', 'black'],
+//   ['black', 'black', 'black', 'white', 'black', 'black', 'black', 'black'],
+//   ['black', 'black', 'black', 'white', 'black', 'black', 'black', 'black'],
+//   ['black', 'black', 'black', 'white', 'black', 'black', 'black', 'black'],
+//   ['black', 'black', 'black', 'white', 'black', 'black', 'black', 'black'],
+//   ['', 'white', 'black', 'white', 'black', 'black', 'black', 'black']
+// ];
+
 let player = 'black'
 let blackScore = 2
 let whiteScore = 2
-let placedPiece = false
-
 let blackScoreContainer = document.createElement('span')
 let whiteScoreContainer = document.createElement('span')
+let placedPiece = false
 
 const drawScoreBoard = () => {
   document.querySelector('.score-board').appendChild(blackScoreContainer)
@@ -26,7 +33,6 @@ const drawScoreBoard = () => {
   blackScoreContainer.innerHTML = 'Blacks: 2'
   whiteScoreContainer.innerHTML = 'White: 2'
 }
-drawScoreBoard()
 
 const updateScore = () => {
   let blacks = 0
@@ -40,48 +46,18 @@ const updateScore = () => {
       else if (value === 'white') {
         whites += 1
       }
-       
     }
   }
   blackScore = blacks
   whiteScore = whites
   blackScoreContainer.innerHTML = 'Blacks: ' + blacks
-  whiteScoreContainer.innerHTML = 'White: ' + whites
+  whiteScoreContainer.innerHTML = 'Whites: ' + whites
 }
-
-
-
-// let getBlackScore = () => {
-//   for (let i = 0; i < board.length; i++) {
-//     let scoreCount = 0
-//     scoreCount = board[i].reduce(function(acc,value) {
-//       if (value == 'black') {
-//         acc++
-//         blackScore++
-//         return acc
-//       }
-//     },0) 
-//   }
-//   console.log('Black score ' + blackScore)
-// }
-// 
-// let getWhiteScore = () => {
-//   for (let i = 0; i < board.length; i++) {
-//     let scoreCount = board[i].reduce(function(acc,value) {
-//       if (value == 'white') {
-//         acc++
-//         whiteScore++
-//         return acc
-//       }
-//     },0) 
-//   }
-//   console.log('White score ' + whiteScore)
-// }
 
 const whosTurn = () => {
   document.querySelector('.whos-turn').innerHTML = player + "’s Turn"
 }
-whosTurn();
+
 
 //// Switch between black's and white's turns ///
 const changeTurns = () => {
@@ -95,7 +71,6 @@ const changeTurns = () => {
 }
 
 ///////////// Render HTML for game board ///////////////
-
 const createBoard = () => {
   for (let row = 0; row < 8; row++) {
     for (let col = 0; col < 8; col++) {
@@ -103,9 +78,6 @@ const createBoard = () => {
     }
   }
 }
-createBoard();
-
-
 
 ///////////// Place Pieces on Board /////////
 const placePieces = () => {
@@ -126,9 +98,6 @@ const placePieces = () => {
     }
   }
 }
-placePieces();
-
-
  
 const checkLeft = (row,col) => {          
   let validTiles = 0
@@ -202,6 +171,32 @@ const checkBelow = (row,col) => {
   } 
 }
 
+const initGame = () => {
+  createBoard();
+  placePieces();
+  whosTurn();
+  drawScoreBoard()
+}
+initGame();
+
+
+let isBoardFull = () => {
+  for (let row = 0; row < 8; row++) {
+    for (let col = 0; col < 8; col++) {
+        let emptySpace = 0
+      let value = board[row][col];
+      if (value === '') {
+        emptySpace ++
+        console.log('Empty space ' + emptySpace)
+      } if (emptySpace === 64) {
+        alert('Game Over!')
+      }
+    
+  }
+}
+}
+isBoardFull()
+
 //////// Game Play Loop ////////////
 
 for (let row = 0; row < board.length; row++) {
@@ -228,15 +223,27 @@ for (let row = 0; row < board.length; row++) {
   } // close col for loop
 } // Close row for loop
 
-let isBoardFull = () => {
-  for (let i = 0; i < board.length; i++) {
-    let scoreCount = board[i].reduce(function(acc,value) {
-      if (value == 'white') {
-        acc++
-        whiteScore++
-        return acc
-      }
-    },0) 
-  }
-  console.log('White score ' + whiteScore)
+
+// const resetGame = () => {
+//   board = [
+//   ['', '', '',      '',      '', '', '', ''],
+//   ['', '', '',      '',      '', '', '', ''],
+//   ['', '', '',      '',      '', '', '', ''],
+//   ['', '', '', 'white', 'black', '', '', ''],
+//   ['', '', '', 'black', 'white', '', '', ''],
+//   ['', '', '',      '',      '', '', '', ''],
+//   ['', '', '',      '',      '', '', '', ''],
+//   ['', '', '',      '',      '', '', '', '']
+// ];
+//   
+//   player = 'black'
+//   blackScore = 2
+//   whiteScore = 2
+//   initGame()
+// }
+// // resetGame();
+
+const resetGame = () => {
+  location.reload();
 }
+document.querySelector('.reset').addEventListener('click', resetGame);

@@ -14,7 +14,7 @@ body {
 
 .board {
   display: grid;
-  gap: 2px;
+  gap: 3px;
   grid-template: repeat(8, 1fr) / repeat(8, 1fr);
   border: 10px solid #000;
   border-radius: 10px;
@@ -30,6 +30,8 @@ body {
   width: var(--square-size);
   height: var(--square-size);
   background-color: rgb(0, 128, 0);
+  border-top: 1px solid rgb(0, 55, 0);
+  border-left: 1px solid rgb(0, 55, 0);
 }
 
 .square:hover { 
@@ -64,4 +66,9 @@ body {
 
 .whos-turn {text-transform: capitalize;}
 
+.score-board span {
+  padding: 0 10px;
+}
+
 body#landing-page { background: #fff;}
+
