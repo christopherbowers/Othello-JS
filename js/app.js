@@ -9,31 +9,21 @@ let board = [
   ['', '', '',      '',      '', '', '', '']
 ];
 
-// let board = [
-//   ['black', 'black', 'black', 'white', 'black', 'black', 'black', 'black'],
-//   ['black', 'black', 'black', 'white', 'black', 'black', 'black', 'black'],
-//   ['black', 'black', 'black', 'white', 'black', 'black', 'black', 'black'],
-//   ['black', 'black', 'black', 'white', 'black', 'black', 'black', 'black'],
-//   ['black', 'black', 'black', 'white', 'black', 'black', 'black', 'black'],
-//   ['black', 'black', 'black', 'white', 'black', 'black', 'black', 'black'],
-//   ['black', 'black', 'black', 'white', 'black', 'black', 'black', 'black'],
-//   ['', 'white', 'black', 'white', 'black', 'black', 'black', 'black']
-// ];
-
 let player = 'black'
 let blackScore = 2
 let whiteScore = 2
 let blackScoreContainer = document.createElement('span')
 let whiteScoreContainer = document.createElement('span')
 let placedPiece = false
-let canPlacePiece = true
+let canPlacePiece = 0
 
 const drawScoreBoard = () => {
   document.querySelector('.score-board').appendChild(blackScoreContainer)
   document.querySelector('.score-board').appendChild(whiteScoreContainer)
   blackScoreContainer.innerHTML = 'Blacks: 2'
-  whiteScoreContainer.innerHTML = 'Whites: 2'
+  whiteScoreContainer.innerHTML = 'White: 2'
 }
+drawScoreBoard()
 
 const updateScore = () => {
   let blacks = 0
@@ -47,18 +37,19 @@ const updateScore = () => {
       else if (value === 'white') {
         whites += 1
       }
+       
     }
   }
   blackScore = blacks
   whiteScore = whites
   blackScoreContainer.innerHTML = 'Blacks: ' + blacks
-  whiteScoreContainer.innerHTML = 'Whites: ' + whites
+  whiteScoreContainer.innerHTML = 'White: ' + whites
 }
 
 const whosTurn = () => {
   document.querySelector('.whos-turn').innerHTML = player + "’s Turn"
 }
-
+whosTurn();
 
 //// Switch between black's and white's turns ///
 const changeTurns = () => {
@@ -72,6 +63,7 @@ const changeTurns = () => {
 }
 
 ///////////// Render HTML for game board ///////////////
+
 const createBoard = () => {
   for (let row = 0; row < 8; row++) {
     for (let col = 0; col < 8; col++) {
@@ -79,6 +71,9 @@ const createBoard = () => {
     }
   }
 }
+createBoard();
+
+
 
 ///////////// Place Pieces on Board /////////
 const placePieces = () => {
@@ -99,6 +94,9 @@ const placePieces = () => {
     }
   }
 }
+placePieces();
+
+
  
 const checkLeft = (row,col) => {          
   let validTiles = 0
@@ -106,17 +104,14 @@ const checkLeft = (row,col) => {
     let currentTile = board[row][i]
       if (currentTile !== '' && currentTile !== player && i-1 >= 0 ) {
         validTiles++
-        console.log(validTiles)
-        if (validTiles === 0) { 
-          canPlacePiece = false
-//          return;
-        }
       }
       if (validTiles !== 0 && board[row][col-1-validTiles] === player) {
       board[row][col] = player;
       for (let i = col-1; i > col-1-validTiles; i--) {
         board[row][i] = player
       }
+      placePieces();
+      return;
     }
   }
 }
@@ -175,116 +170,42 @@ const checkBelow = (row,col) => {
   } 
 }
 
-
-
-const checkDownRight = (row, col) => {
-    let validTiles = 0
-    for (let i = row + 1; i < 8; i++) {
-        for (let j = col + 1; j < 8; j++) {
-            let currentTile = board[i][j]
-            if (currentTile !== '' && currentTile !== player && i + 1 < 7 && j + 1 < 7) {
-                validTiles++
-            }
-            if (validTiles !== 0 && board[row + 1 + validTiles][col + 1 + validTiles] === player) {
-//                 console.log('Valid Tiles ' + validTiles)
-                board[row][col] = player;
-                for (let i = row + 1; i < row + 1 + validTiles; i++) {
-                    for (let j = col + 1; j < col + 1 + validTiles; j++) {
-                        board[i][j] = player;
-                    }
-                }
-                placePieces();
-                return;
-            }
-        }
-    }
-}
-
-// const checkDownLeft = (row, col) => {
-//     let validTiles = 0
-//     for (let i = row + 1; i < 8; i++) {
-//         for (let j = col - 1; j > 0; j--) {
-//             let currentTile = board[i][j]
-//             if (currentTile !== '' && currentTile !== player && i+1 < 7 && j-1 >= 0) {
-//                 validTiles++
-// //                 console.log(i,j)
-// //                 console.log('Valid Tiles ' + validTiles)
-//             }
-//             if (validTiles !== 0 && board[row+1+validTiles][col-1-validTiles] === player) {
-//                 console.log(col-1-validTiles)
-//                 board[row][col] = player;
-//                 for (let i = row+1; i < row+1+validTiles; i++) {
-//                     for (let j = col-1; j < col-1-validTiles; j--) {
-//                         board[i][j] = player;
-//                       console.log('Valid Tiles ' + validTiles)
-//                       console.log()
-//                     }
-//                 }
-//                 placePieces();
-//                 return;
-//             }
-//         }
-//     }
-// }
-
-const initGame = () => {
-  createBoard();
-  placePieces();
-  whosTurn();
-  drawScoreBoard()
-}
-
-let gameOver = false
-
 let isGameOver = () => {
-  if ((blackScore + whiteScore) === 64 || canPlacePiece === false) {
+  if (canPlacePiece > 0) {
     gameOver = true
-    if (canPlacePiece === false || blackScore === whiteScore)
+    if (blackScore === whiteScore)
       alert('Game Over! It\'s a Tie!') ? "" : location.reload(); {
     }
-    if (canPlacePiece === false || blackScore > whiteScore) {
+    if (blackScore > whiteScore) {
       alert('Game Over! Black Wins ' + blackScore + ' to ' + whiteScore) ? "" : location.reload();
-    } if (canPlacePiece === false || blackScore < whiteScore)
+    } if (blackScore < whiteScore)
       alert('Game Over! White Wins ' + whiteScore + ' to ' + blackScore) ? "" : location.reload();
   }
 }
+isGameOver()
 
-
-
-
-initGame();
-isGameOver();
 //////// Game Play Loop ////////////
 
 for (let row = 0; row < board.length; row++) {
   for (let col = 0; col < board[row].length; col++) {
-  if (!gameOver) {
     document.getElementById(`${[row]}${[col]}`).addEventListener('click', () => {
       checkLeft(row,col)
       checkAbove(row,col)
       checkRight(row,col)
       checkBelow(row,col)
       
-//       checkDownRight(row,col)
-//       checkDownLeft(row,col)
-     
       if (placedPiece) {
         changeTurns()
-      } else {
-        gameOver = true
       }
       
       updateScore()
+      drawScoreBoard()
+      console.log('Black score ' + blackScore)      
+      console.log('White score ' + whiteScore)      
+//       getBlackScore()
+//       getWhiteScore()
       whosTurn()
-      isGameOver()
       
       }) // close event listener
-    } 
-    
   } // close col for loop
 } // Close row for loop
-
-const resetGame = () => {
-  location.reload();
-}
-document.querySelector('.reset').addEventListener('click', resetGame);
