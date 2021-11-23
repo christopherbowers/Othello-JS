@@ -17,6 +17,17 @@ let blackScore = 2
 let whiteScore = 2
 let placedPiece = false
 
+let blackScoreContainer = document.createElement('span')
+let whiteScoreContainer = document.createElement('span')
+
+const drawScoreBoard = () => {
+  document.querySelector('.score-board').appendChild(blackScoreContainer)
+  document.querySelector('.score-board').appendChild(whiteScoreContainer)
+  blackScoreContainer.innerHTML = 'Blacks: 2'
+  whiteScoreContainer.innerHTML = 'White: 2'
+}
+drawScoreBoard()
+
 const updateScore = () => {
   let blacks = 0
   let whites = 0
@@ -34,7 +45,11 @@ const updateScore = () => {
   }
   blackScore = blacks
   whiteScore = whites
+  blackScoreContainer.innerHTML = 'Blacks: ' + blacks
+  whiteScoreContainer.innerHTML = 'White: ' + whites
 }
+
+
 
 // let getBlackScore = () => {
 //   for (let i = 0; i < board.length; i++) {
@@ -201,7 +216,8 @@ for (let row = 0; row < board.length; row++) {
         changeTurns()
       }
       
-      redrawScore()
+      updateScore()
+      drawScoreBoard()
       console.log('Black score ' + blackScore)      
       console.log('White score ' + whiteScore)      
 //       getBlackScore()
