@@ -129,6 +129,7 @@ const checkRight = (row,col) => {
       for (let i = col+1; i < col+1+validTiles; i++) {
           board[row][i] = player;
         }
+        console.log(validTiles)
         placePieces();
         return;
         } 
@@ -179,21 +180,15 @@ const initGame = () => {
 }
 initGame();
 
-
+let gameOver = false
 let isBoardFull = () => {
-  for (let row = 0; row < 8; row++) {
-    for (let col = 0; col < 8; col++) {
-        let emptySpace = 0
-      let value = board[row][col];
-      if (value === '') {
-        emptySpace ++
-        console.log('Empty space ' + emptySpace)
-      } if (emptySpace === 64) {
-        alert('Game Over!')
-      }
-    
+  if ((blackScore + whiteScore) === 64) {
+    gameOver = true
+    if (blackScore > whiteScore) {
+    alert('Game Over! Black Wins ' + blackScore + ' to ' + whiteScore) ? "" : location.reload();
+    } if (blackScore < whiteScore)
+    alert('Game Over! White Wins ' + whiteScore + ' to ' + blackScore) ? "" : location.reload();
   }
-}
 }
 isBoardFull()
 
@@ -201,47 +196,26 @@ isBoardFull()
 
 for (let row = 0; row < board.length; row++) {
   for (let col = 0; col < board[row].length; col++) {
+  if (!gameOver) {
     document.getElementById(`${[row]}${[col]}`).addEventListener('click', () => {
       checkLeft(row,col)
       checkAbove(row,col)
       checkRight(row,col)
       checkBelow(row,col)
-      
+     
       if (placedPiece) {
         changeTurns()
       }
       
       updateScore()
-      drawScoreBoard()
-      console.log('Black score ' + blackScore)      
-      console.log('White score ' + whiteScore)      
-//       getBlackScore()
-//       getWhiteScore()
+      console.log(blackScore + whiteScore)      
       whosTurn()
-      
+      isBoardFull()
       }) // close event listener
+    } 
+    
   } // close col for loop
 } // Close row for loop
-
-
-// const resetGame = () => {
-//   board = [
-//   ['', '', '',      '',      '', '', '', ''],
-//   ['', '', '',      '',      '', '', '', ''],
-//   ['', '', '',      '',      '', '', '', ''],
-//   ['', '', '', 'white', 'black', '', '', ''],
-//   ['', '', '', 'black', 'white', '', '', ''],
-//   ['', '', '',      '',      '', '', '', ''],
-//   ['', '', '',      '',      '', '', '', ''],
-//   ['', '', '',      '',      '', '', '', '']
-// ];
-//   
-//   player = 'black'
-//   blackScore = 2
-//   whiteScore = 2
-//   initGame()
-// }
-// // resetGame();
 
 const resetGame = () => {
   location.reload();
