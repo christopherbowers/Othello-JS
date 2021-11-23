@@ -12,11 +12,25 @@ let board = [
   ['', '', '',      '',      '', '', '', '']
 ];
 
+let blackScore = 0
 
+let getBlackScore = () => {
+for (let i = 0; i < board.length; i++) {
+
+let scoreCount = board[i].reduce(function(acc,value) {
+  if (value == 'black') {
+    acc++
+    blackScore++
+    return acc
+  }
+},0) 
+}
+console.log(blackScore)
+}
 
 // let blackScore
 // let whiteScore
- 
+let placedPiece = false
 
 let player = 'black'
 
@@ -29,8 +43,10 @@ whosTurn();
 const changeTurns = () => {
   if (player === 'black') {
     player = 'white';
+    placedPiece = false
   } else if (player === 'white') {
     player = 'black';
+    placedPiece = false
   }
 }
 
@@ -56,9 +72,11 @@ const placePieces = () => {
       } else {
         if (position === 'black') {
           document.getElementById(`${[row]}${[col]}`).innerHTML = '<div class="black"></div>';
+          placedPiece = true
         }
         if (position === 'white') {
           document.getElementById(`${[row]}${[col]}`).innerHTML = '<div class="white"></div>';
+          placedPiece = true
         }
       }
     }
@@ -93,7 +111,7 @@ const checkRight = (row,col) => {
       let currentTile = board[row][i]
         if (currentTile !== '' && currentTile !== player && i+1 < 7) {
           validTiles++
-          console.log(validTiles)
+//           console.log(validTiles)
       }
       if (validTiles !== 0 && board[row][col+1+validTiles] === player) {
         board[row][col] = player;
@@ -148,53 +166,39 @@ const checkBelow = (row,col) => {
 
 for (let row = 0; row < board.length; row++) {
   for (let col = 0; col < board[row].length; col++) {
-    document.getElementById(`${[row]}${[col]}`).addEventListener('click', () => { // Add event listener to squares
+    document.getElementById(`${[row]}${[col]}`).addEventListener('click', () => {
       checkLeft(row,col)
       checkAbove(row,col)
       checkRight(row,col)
       checkBelow(row,col)
-
-      changeTurns()
+      
+      if (placedPiece) {
+        changeTurns()
+      }
+      getBlackScore()
+      
       whosTurn()
-
-
-        
-
-            
-            
-          // Check below
-
-            
-            
-             // Check down and right
-//             for (let i = row+1; i < board[col].length; i++) {
-//               for (let j = col+1; i < board[row].length; i++) {
-//                 let currentTile = board[i][j]
-//                   if (currentTile !== '' && currentTile !== player && i+1 < 7 && i < 7) {
-//                     validTiles++
-//                   }
-//                   
-//                   if (validTiles !== 0 && board[row+1+validTiles][col+1+validTiles] === player) {
-//                     board[row][col] = player;
-//                     for (let i = row+1; i < row+1+validTiles; i++) {
-//                       for (let j = col+1; j < col+1+validTiles; j++) {
-//                         board[i][j] = player;
-//                         console.log(col+1+validTiles)
-//                       }
-//                     }
-//                   placePieces();
-// //                   changeTurns();
-//                   whosTurn();
-//                   return;
-//                 }
-//               } 
-//             } 
-            
-
       
       }) // close event listener
   } // close col for loop
 } // Close row for loop
 
+// 
+// for (let row = 0; row < board.length; row++) {
+//   for (let col = 0; col < board[row].length; col++) {
+//   
+//     const countBlack = board[row].filter((word) => { return word === 'black' })
+// //     const countBlack = board.filter((word) => { return word === 'black' })
+//     console.log(countBlack)
+//     
+//   }
+// }
 
 
+
+
+
+//   let white = (board[i].reduce(word =>    word === 'white')) 
+// //     blackScore++
+//     console.log(white)
+//   }
