@@ -1,12 +1,12 @@
 let board = [
-  ['', '', '',      '',      '', '', '', ''],
-  ['', '', '',      '',      '', '', '', ''],
-  ['', '', '',      '',      '', '', '', ''],
+  ['', '', '', '', '', '', '', ''],
+  ['', '', '', '', '', '', '', ''],
+  ['', '', '', '', '', '', '', ''],
   ['', '', '', 'white', 'black', '', '', ''],
   ['', '', '', 'black', 'white', '', '', ''],
-  ['', '', '',      '',      '', '', '', ''],
-  ['', '', '',      '',      '', '', '', ''],
-  ['', '', '',      '',      '', '', '', '']
+  ['', '', '', '', '', '', '', ''],
+  ['', '', '', '', '', '', '', ''],
+  ['', '', '', '', '', '', '', '']
 ];
 
 let player = 'black'
@@ -34,11 +34,10 @@ const updateScore = () => {
       let value = board[row][col];
       if (value === 'black') {
         blacks += 1
-      }
-      else if (value === 'white') {
+      } else if (value === 'white') {
         whites += 1
       }
-       
+
     }
   }
   blackScore = blacks
@@ -57,11 +56,11 @@ whosTurn();
 const changeTurns = () => {
   if (player === 'black') {
     player = 'white';
-//     canPlacePiece = 0
+    //     canPlacePiece = 0
     placedPiece = false
   } else if (player === 'white') {
     player = 'black';
-//     canPlacePiece = 0
+    //     canPlacePiece = 0
     placedPiece = false
   }
 }
@@ -84,8 +83,7 @@ const placePieces = () => {
   for (let row = 0; row < 8; row++) {
     for (let col = 0; col < 8; col++) {
       let position = board[row][col]
-      if (position === '') {
-      } else {
+      if (position === '') {} else {
         if (position === 'black') {
           document.getElementById(`${[row]}${[col]}`).innerHTML = '<div class="black"></div>';
           placedPiece = true
@@ -101,17 +99,17 @@ const placePieces = () => {
 placePieces();
 
 
- 
-const checkLeft = (row,col) => {          
+
+const checkLeft = (row, col) => {
   let validTiles = 0
-  for (let i = col-1; i > 0; i--) { 
+  for (let i = col - 1; i > 0; i--) {
     let currentTile = board[row][i]
-      if (currentTile !== '' && currentTile !== player && i-1 >= 0 ) {
-        validTiles++
-      }
-      if (validTiles !== 0 && board[row][col-1-validTiles] === player) {
+    if (currentTile !== '' && currentTile !== player && i - 1 >= 0) {
+      validTiles++
+    }
+    if (validTiles !== 0 && board[row][col - 1 - validTiles] === player) {
       board[row][col] = player;
-      for (let i = col-1; i > col-1-validTiles; i--) {
+      for (let i = col - 1; i > col - 1 - validTiles; i--) {
         board[row][i] = player
       }
       placePieces();
@@ -120,60 +118,60 @@ const checkLeft = (row,col) => {
   }
 }
 
-const checkRight = (row,col) => {
+const checkRight = (row, col) => {
   let validTiles = 0
-    for (let i = col+1; i < board[row].length; i++) {
-      let currentTile = board[row][i]
-        if (currentTile !== '' && currentTile !== player && i+1 < 7) {
-          validTiles++
-      }
-      if (validTiles !== 0 && board[row][col+1+validTiles] === player) {
-        board[row][col] = player;
-      for (let i = col+1; i < col+1+validTiles; i++) {
-          board[row][i] = player;
-        }
-        
-        placePieces();
-        return;
-        } 
-    }   
-}
-      
-const checkAbove = (row,col) => {               
-  let validTiles = 0
-  for (let i = row-1; i > 0; i--) { 
-    let currentTile = board[i][col]
-      if (currentTile !== '' && currentTile !== player && i-1 >= 0) {
-        validTiles++
-      }
-      if (validTiles !== 0 && board[row-1-validTiles][col] === player) {
+  for (let i = col + 1; i < board[row].length; i++) {
+    let currentTile = board[row][i]
+    if (currentTile !== '' && currentTile !== player && i + 1 < 7) {
+      validTiles++
+    }
+    if (validTiles !== 0 && board[row][col + 1 + validTiles] === player) {
       board[row][col] = player;
-      for (let i = row-1; i > row-1-validTiles; i--) {
-        board[i][col] = player
+      for (let i = col + 1; i < col + 1 + validTiles; i++) {
+        board[row][i] = player;
       }
-      
+
       placePieces();
       return;
-      }
     }
+  }
 }
 
-const checkBelow = (row,col) => {
+const checkAbove = (row, col) => {
   let validTiles = 0
-  for (let i = row+1; i < board[col].length; i++) {
+  for (let i = row - 1; i > 0; i--) {
     let currentTile = board[i][col]
-      if (currentTile !== '' && currentTile !== player && i+1 < 7) {
-        validTiles++
-      }
-      if (validTiles !== 0 && board[row+1+validTiles][col] === player) {
+    if (currentTile !== '' && currentTile !== player && i - 1 >= 0) {
+      validTiles++
+    }
+    if (validTiles !== 0 && board[row - 1 - validTiles][col] === player) {
       board[row][col] = player;
-      for (let i = row+1; i < row+1+validTiles; i++) {
+      for (let i = row - 1; i > row - 1 - validTiles; i--) {
+        board[i][col] = player
+      }
+
+      placePieces();
+      return;
+    }
+  }
+}
+
+const checkBelow = (row, col) => {
+  let validTiles = 0
+  for (let i = row + 1; i < board[col].length; i++) {
+    let currentTile = board[i][col]
+    if (currentTile !== '' && currentTile !== player && i + 1 < 7) {
+      validTiles++
+    }
+    if (validTiles !== 0 && board[row + 1 + validTiles][col] === player) {
+      board[row][col] = player;
+      for (let i = row + 1; i < row + 1 + validTiles; i++) {
         board[i][col] = player;
       }
       placePieces();
       return;
-    }   
-  } 
+    }
+  }
 }
 
 let gameOver = false
@@ -181,11 +179,11 @@ let isGameOver = () => {
   if (cantPlacePiece === 2) {
     gameOver = true
     if (blackScore === whiteScore)
-      alert('Game Over! It\'s a Tie!') ? "" : location.reload(); {
-    }
+      alert('Game Over! It\'s a Tie!') ? "" : location.reload(); {}
     if (blackScore > whiteScore) {
       alert('Game Over! Black Wins ' + blackScore + ' to ' + whiteScore) ? "" : location.reload();
-    } if (blackScore < whiteScore)
+    }
+    if (blackScore < whiteScore)
       alert('Game Over! White Wins ' + whiteScore + ' to ' + blackScore) ? "" : location.reload();
   }
 }
@@ -196,28 +194,23 @@ isGameOver()
 for (let row = 0; row < 8; row++) {
   for (let col = 0; col < 8; col++) {
     document.getElementById(`${[row]}${[col]}`).addEventListener('click', () => {
-      checkLeft(row,col)
-      checkAbove(row,col)
-      checkRight(row,col)
-      checkBelow(row,col)
-     
+      checkLeft(row, col)
+      checkAbove(row, col)
+      checkRight(row, col)
+      checkBelow(row, col)
+
       if (placedPiece) {
         changeTurns()
       } else {
         changeTurns()
         cantPlacePiece++
       }
-      
+
       updateScore()
       drawScoreBoard()
       isGameOver()
-      
-//       console.log('Black score ' + blackScore)      
-//       console.log('White score ' + whiteScore)      
-//       getBlackScore()
-//       getWhiteScore()
       whosTurn()
-      
-      }) // close event listener
+
+    }) // close event listener
   } // close col for loop
 } // Close row for loop
