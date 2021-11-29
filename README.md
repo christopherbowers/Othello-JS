@@ -21,7 +21,7 @@ Othello is a strategy board game. Two players. Two sides. One black,. One white.
 
 ### Play in web browser
 
-[Play the Othello](http://smart-trick.surge.sh) in your browser. 
+[Play the Othello](http://bowers-othello.surge.sh) in your browser. 
 
 ### Download and run locally
 
